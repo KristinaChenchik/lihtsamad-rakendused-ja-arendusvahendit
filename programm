@@ -1,0 +1,33 @@
+import psutil
+import requests, json
+
+vabaRAM = psutil.virtual_memory().free
+kokkuRAM = psutil.virtual_memory().total
+protsentRAM = psutil.virtual_memory().percent
+
+vabaSR = psutil.disk_usage("/").free
+kokkuSR = psutil.disk_usage("/").total
+protsentSR = psutil.disk_usage("/").percent
+
+if protsentRAM > 20:
+    print ("Hoiatus: RAM kasutab rohkem kui 20%")
+if protsentSR> 20:
+    print("Hoiatus: salvestusruum kasutab rohkem kui 20%"")
+
+api_key = "010cb4edccd749722ca7065d57f08363"
+base_ur1 = "http://api.openweathermap.org/data/2.5/weather?"
+city = "Tallinn"
+complete_ur1 = base_url + "appid=" + api_key + "&q=" + city
+
+reponse = requests.get(complete_url)
+reponse_json = reponse.json()
+
+main = reponse_json["main"]
+
+temperature_kelvin = main["temp"]
+temperature_celsius = temperature_kelvin - 273.15
+
+file = open("temperature.txt". "x")
+
+file.write(str(temperature_celsius))
+file.write("{0} {1} {2}".format("Temperatur Tallinnas:", temperature_celsius, "C"))
